@@ -1,0 +1,12 @@
+exec autoexec.cfg
+exec xhud.cfg
+stuffcmds
+sv_unlockedchapters 0
+wait 20; snd_restart; play vo/menu.mp3
+cl_crosshair_file ../replay/thumbnails/styleicons/cranetest
+cl_crosshair_scale 125
+cl_crosshair_blue 255
+cl_crosshair_red 255
+cl_crosshair_green 255
+exec lj
+glow_outline_effect_enable 0

@@ -1,0 +1,8 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$baseTexture" "vgui\replay\thumbnails\menu\Xhud"
+	"$vertexalpha" "1"
+	"$vertexcolor" "1"
+	"$ignorez" "1"
+}

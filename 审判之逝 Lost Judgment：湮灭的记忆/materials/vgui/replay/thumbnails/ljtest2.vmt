@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$baseTexture" "vgui\replay\thumbnails\ljtest2"
+	"$vertexcolor" "1"
+	"$ignorez" "1"
+Proxies
+{
+AnimatedTexture
+{ 
+animatedTextureVar $basetexture 
+animatedTextureFrameNumVar $frame
+animatedTextureFrameRate 8 //this is the FPS that the texture will animate at
+}
+}
+}

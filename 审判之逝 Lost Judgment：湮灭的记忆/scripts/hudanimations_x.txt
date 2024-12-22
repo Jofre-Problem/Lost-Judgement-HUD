@@ -1,0 +1,359 @@
+//stop particles
+event StopParticle0
+{
+	FireCommand 0 "stop0"
+}
+event StopParticle1
+{
+	FireCommand 0 "stop1"
+}
+event CollectionCrafting_ItemRecieved	//Fix trade-up background (wiethoofd)
+{
+	Animate TradeUpContainer	wide	0	Accel 0.0 0.001
+}
+
+event SurveyShowSequence	//Yeet this
+{
+	RunEventChild	Survey	SurveyDelete	0.001
+}
+
+event CompetitiveGame_RestoreChatWindow	//Fix stuck animations
+{
+	Animate Hitmarker	Alpha	0	Linear 0.1 0.001
+	RunEvent HudLowAmmoPulseStop 0.1
+	RunEvent HudSpyDisguiseFadeOut 0.1
+}
+
+event CompetitiveGame_LowerChatWindow{}	//plays at post-casual xp screen
+event HudTournament_MoveChatWindow
+{
+	//PlaySound 0.0 "weapons/det_pack_timer.wav"
+	//PlaySound 0.5 "weapons/det_pack_timer.wav"
+	//PlaySound 1.0 "weapons/det_pack_timer.wav"
+	//PlaySound 1.5 "weapons/det_pack_timer.wav"
+	//PlaySound 2.0 "weapons/det_pack_timer.wav"
+}
+
+//==============================================================================
+
+//Hitmarker
+event DamagedPlayer
+{
+	StopEvent AnimateHitmarker 0.0
+	RunEvent AnimateHitmarker 0.001
+}
+
+event AnimateHitmarker
+{
+	Animate Hitmarker	Alpha	"255"	Linear 0.0 0.001
+	Animate Hitmarker	Alpha	"0"	Linear 0.3 0.2
+}
+event CompetitiveGame_LowerChatWindow
+{
+	StopEvent	Radar		0.0
+	StopEvent	RadarLoop	0.0
+	SetVisible	roundinfo	0		0.05
+}
+
+event CompetitiveGame_RestoreChatWindow
+{
+	RunEvent	Radar	0.0
+}
+
+event Radar
+{
+	SetVisible	roundinfo			1	0
+	SetVisible	HudMatchStatus		1	0
+	RunEvent	RadarLoop			0.0
+}
+
+event RadarLoop
+{
+	RunEvent	Radar	0.001
+}
+//==============================================================================//Uber Tracker
+event MenuOpen
+{
+	RunEvent	MenuOpen 0.0 
+	
+	Animate HudMenu Alpha 		"255"		Linear 0.05 0.1
+	Animate HudMenu yPos		"-30"		Linear 0.0 0.0
+	Animate HudMenu xPos		"0"		Linear 0.0 0.0	
+	Animate HudMenu SelectionAlpha 	"255"		Linear 0.05 0.1
+	Animate CSpectatorTargetID xpos "c-126"	Linear 0.0 0.0
+	Animate HudMenu FgColor		"FgColor"		Linear 0.05 0.1
+	Animate HudMenu MenuColor		"MenuColor"	Linear  0.05 0.1
+	Animate HudMenu ItemColor		"255 167 42 245"	Linear 0.05 0.1
+	Animate HudMenu TextScan		"1"		Linear 0.05 0.1
+	//SetVisible hudplayerhealth 1 0.0	
+	// Undo any blur
+	Animate HudMenu		Blur		"1"			Linear	0	0
+
+}
+event MenuPulse
+{
+
+    RunEvent MenuOpen                             0.0
+}
+
+event MenuClose
+{
+	RunEventChild DisguiseDust StartParticle0 0.0
+	Animate HudMenu	Alpha	"0"	Linear 0.0 0.2
+	Animate HudMenu	SelectionAlpha	"0"	Linear 0.0 0.2
+	Animate HudMenu	FgColor	"Blank"	Linear 0.0 0.2
+	Animate HudMenu	MenuColor	"Blank"	Linear 0.0 0.2
+	Animate HudMenu	ItemColor	"Blank"	Linear 0.0 0.2
+		StopEvent	MenuOpen 0.0 
+	RunEvent UberTimerHide 0.0
+	RunEvent UberTimerRun 0.1
+}
+
+event UberTimerRun
+{
+	Animate UberTimerBG	tall	2	Linear 0.0 0.001
+	Animate UberTimer	BgColor	"White"	Linear	0.0 0.001
+	Animate UberTimer	wide	50	Linear	0.0 55.0
+	Animate UberTimer	BgColor	"Yellow"	Linear	40.0 0.001
+	Animate UberTimer	BgColor	"Red"	Linear	55.0 0.001
+	RunEvent UberTimerHide 60.0
+}
+
+event UberTimerHide
+{
+	StopEvent UberTimerRun 0.0
+	Animate UberTimerBG tall	0	Linear 0.0 0.001
+	Animate UberTimer	wide	0	Linear	0.0 0.001
+}
+
+//==============================================================================
+
+event HudHealthBonusPulse
+{
+	SetVisible HealthBarOverheal 1 0.0
+
+	SetVisible HealthBarLowHealth 0 0.0
+
+	SetVisible HealthSpectatorBarBuff 1 0.0
+
+	Animate HealthBarBG	bgcolor	"Health Bar"	Linear 0.0 0.001
+}
+
+event HudHealthBonusPulseStop
+{
+	SetVisible HealthBarOverheal 0 0.0
+
+	SetVisible HealthBarLowHealth 1 0.0
+
+	SetVisible HealthSpectatorBarBuff 0 0.0
+
+	Animate HealthBarBG	bgcolor	"TransparentGrayDarkest"	Linear 0.0 0.001
+}
+
+//==============================================================================
+
+event HudHealthDyingPulse
+{
+	SetVisible HealthSpectatorBarHurt 1 0.0
+	SetVisible HealthBarShine 1 0.0
+}
+
+event HudHealthDyingPulseStop
+{
+	SetVisible HealthSpectatorBarHurt 0 0.0
+	SetVisible HealthBarShine 0 0.0
+}
+
+//==============================================================================
+
+event HudLowAmmoPulse
+{
+	SetVisible LowAmmoBox	1 0.0
+}
+
+event HudLowAmmoPulseStop
+{
+	SetVisible LowAmmoBox	0 0.0
+}
+
+//==============================================================================
+
+event HudMedicCharged
+{
+	Animate ChargeMeter	FgColor	"255 000 000 255"	Linear	0	1
+	Animate ChargeMeter	FgColor	"000 255 000 255"	Linear	1	1
+	Animate ChargeMeter	FgColor	"000 000 255 255"	Linear	2	1
+
+	Animate ChargeMeter1	FgColor	"255 000 000 255"	Linear	0	1
+	Animate ChargeMeter2	FgColor	"255 000 000 255"	Linear	0	1
+	Animate ChargeMeter3	FgColor	"255 000 000 255"	Linear	0	1
+	Animate ChargeMeter4	FgColor	"255 000 000 255"	Linear	0	1
+	Animate ChargeMeter1	FgColor	"000 255 000 255"	Linear	1	1
+	Animate ChargeMeter2	FgColor	"000 255 000 255"	Linear	1	1
+	Animate ChargeMeter3	FgColor	"000 255 000 255"	Linear	1	1
+	Animate ChargeMeter4	FgColor	"000 255 000 255"	Linear	1	1
+	Animate ChargeMeter1	FgColor	"000 000 255 255"	Linear	2	1
+	Animate ChargeMeter2	FgColor	"000 000 255 255"	Linear	2	1
+	Animate ChargeMeter3	FgColor	"000 000 255 255"	Linear	2	1
+	Animate ChargeMeter4	FgColor	"000 000 255 255"	Linear	2	1
+
+	RunEvent HudMedicChargedLoop	3.0
+}
+
+event HudMedicChargedLoop
+{
+	RunEvent HudMedicCharged	0.0
+}
+
+event HudMedicChargedStop
+{
+	StopEvent HudMedicCharged	0.0
+	StopEvent HudMedicChargedLoop	0.0
+
+	Animate ChargeMeter	FgColor	"White"	Linear	0.0	0.001
+
+	Animate ChargeMeter1	FgColor	"White"	Linear	0.0	0.001
+	Animate ChargeMeter2	FgColor	"White"	Linear	0.0	0.001
+	Animate ChargeMeter3	FgColor	"White"	Linear	0.0	0.001
+	Animate ChargeMeter4	FgColor	"White"	Linear	0.0	0.001
+}
+
+//==============================================================================
+
+//Match hud respawn
+event TeamStatus_PlayerDead
+{
+	SetVisible respawntime	1 0.0
+	//PlaySound 0 "weapons/det_pack_timer.wav"
+}
+
+event TeamStatus_PlayerAlive
+{
+	SetVisible respawntime 0 0.0
+}
+
+//==============================================================================
+
+//KOTH timer inactive
+event ActiveTimerHighlight
+{
+	Animate TimePanelValue	FgColor	"White"	Linear 0.1 0.001
+}
+
+event ActiveTimerDim
+{
+	Animate TimePanelValue	FgColor	"WhiteGray"	Linear	0.0 0.001
+}
+
+//==============================================================================
+
+event HudTournamentSetupPanelOpen
+{
+	Animate HudTournamentSetup	xpos	c-90	Linear 0.0 0.001	//Fix wrong position
+	Animate HudTournamentSetup	ypos	61	Spline 0.0 0.2
+
+	//RunEventChild MainMenuOverride HudRecOpen 0.0	//HudRec
+}
+
+event HudTournamentSetupPanelClose	//runs on setup menu initialization | runs on local map initialization
+{
+	Animate HudTournamentSetup	ypos	-70	Spline 0.0 0.2
+
+	//RunEventChild MainMenuOverride HudRecClose 0.0	//HudRec
+}
+
+//HudRec V2
+event HudRecClose
+{
+	FireCommand 0.01 "engine echo ====================hudrec_close===================="
+	FireCommand 0.01 "engine hudrec_close"
+}
+
+event HudRecOpen
+{
+	FireCommand 0.01 "engine echo ====================hudrec_open===================="
+	FireCommand 0.01 "engine hudrec_open"
+}
+
+//==============================================================================
+
+//Show player model on spy disguise
+event HudSpyDisguiseFadeIn
+{
+	Animate HudPlayerClass	xpos	0	Linear 0.01 0.001
+	Animate ModelPin	xpos	0	Linear 0.01 0.001
+
+	SetVisible Disguising	1 0.0
+	SetVisible Disguising	0 1.0
+	SetVisible DisguisingShadow	1 0.0
+	SetVisible DisguisingShadow	0 1.0
+}
+
+event HudSpyDisguiseFadeOut
+{
+	Animate HudPlayerClass	xpos	-200	Linear 0.0 0.001
+	Animate ModelPin	xpos	200	Linear 0.0 0.001
+}
+
+event HudSpyDisguiseChanged{}
+
+//==============================================================================
+
+//ReadyUp Timers
+event HudTournament_ShowTimerCompetitive	//triggers in casual at start of fresh match
+{
+	SetVisible CountdownLabel 1 0.0
+}
+
+event HudTournament_ShowTimerDefault	//MvM Countdown
+{
+	SetVisible CountdownLabel 1 0.0
+}
+
+event HudReadyPulseEnd
+{
+	Animate	TournamentInstructionsLabel 	FgColor		"White"		Linear 0.0 0.1
+
+	StopEvent HudReadyPulse			0.0
+	StopEvent HudReadyPulseLoop		0.0
+
+	RunEventChild MainMenuOverride MvMFixer 0.0	//Fix empty MvM end screen, needs 3 entries
+	RunEventChild MainMenuOverride MvMFixer 0.0
+	RunEventChild MainMenuOverride MvMFixer 0.0
+
+	RunEvent HudTournament_ShowTimerDefault 0.0
+}
+
+event HudTournament_HideTimer
+{
+	SetVisible CountdownLabel 0 0.0
+}
+
+event MvMFixer
+{
+	FireCommand 0.0 "engine mvmfix"
+}
+
+//==============================================================================
+
+//Casual match start count down
+event HudMatchStatus_ShowCountdown
+{
+	Animate CountdownLabel	ypos	150	Linear 0.0 0.0
+	SetVisible CountdownLabel 1 0.0
+	SetVisible CountdownLabel 0 9.9
+}
+
+//==============================================================================
+
+event CompetitiveGame_ShowPvPRankPanel
+{
+	RunEventChild RankPanel PvPRankPanelShowXPChange 0
+}
+
+//==============================================================================
+
+event IntroMovieContinueBlinkStop
+{
+	FireCommand 0.0 "skip"
+}

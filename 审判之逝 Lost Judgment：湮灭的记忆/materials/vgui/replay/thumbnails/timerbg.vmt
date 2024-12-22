@@ -1,0 +1,7 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$baseTexture" "vgui\replay\thumbnails\timerbg"
+	"$vertexcolor" "1"
+	"$ignorez" "1"
+}

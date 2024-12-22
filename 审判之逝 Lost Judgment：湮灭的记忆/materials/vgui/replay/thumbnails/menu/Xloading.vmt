@@ -1,0 +1,33 @@
+"UnlitGeneric"
+{
+	"$translucent" "1"
+	"$baseTexture" "vgui\replay\thumbnails\menu\Xloading"
+	"$vertexalpha" "1"	
+	"$vertexcolor" "1"
+	"$ignorez" "1"
+
+	"$angle" "0.0"
+	"$translate" "[0.0 0.0]"
+	"$center" "[0.5 0.5]"
+	
+	"$color" "{227 228 230}"
+	"$speed" "0"
+
+	"Proxies"
+	{
+		"LinearRamp"
+		{
+			"rate" "-80"
+			"initialValue" "0.0"
+			"resultVar" "$angle"
+		}
+
+		"TextureTransform"
+		{
+			"translateVar" "$translate"
+			"rotateVar" "$angle"
+			"centerVar" "$center"
+			"resultVar" "$basetexturetransform"
+		}
+	}
+}
